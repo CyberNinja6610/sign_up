@@ -90,8 +90,8 @@ class SignUpFragment : Fragment() {
         viewModel.state.observe(viewLifecycleOwner) {
             binding.login.error = it.loginError
             binding.password.error = it.passwordError
-            binding.confirmPassword.error = it.loginError
-            binding.name.error = it.passwordError
+            binding.confirmPassword.error = it.confirmPasswordError
+            binding.name.error = it.nameError
         }
 
         viewModel.login.observe(viewLifecycleOwner) {
