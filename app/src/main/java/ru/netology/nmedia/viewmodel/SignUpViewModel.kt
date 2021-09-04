@@ -80,8 +80,8 @@ class SignUpViewModel (application: Application) : AndroidViewModel(application)
             null
         };
         _state.value = _state.value.copy(
-            confirmPasswordError = error,
-            passwordError = error
+            confirmPasswordError = error?: _state.value.confirmPasswordError,
+            passwordError = error?: _state.value.passwordError
         )
     }
 
