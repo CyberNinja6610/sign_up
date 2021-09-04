@@ -4,6 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_main"
     app:startDestination="@id/feedFragment">
+    <action
+        android:id="@+id/action_to_sign_in"
+        app:destination="@id/signInFragment"
+        app:enterAnim="@android:anim/fade_in"
+        app:exitAnim="@android:anim/fade_out"
+        app:popEnterAnim="@android:anim/fade_in"
+        app:popExitAnim="@android:anim/fade_out" />
+    <action
+        android:id="@+id/action_to_sign_up"
+        app:destination="@id/signUpFragment"
+        app:enterAnim="@android:anim/fade_in"
+        app:exitAnim="@android:anim/fade_out"
+        app:popEnterAnim="@android:anim/fade_in"
+        app:popExitAnim="@android:anim/fade_out" />
 
     <fragment
         android:id="@+id/feedFragment"
@@ -23,4 +37,14 @@
         android:name="ru.netology.nmedia.activity.NewPostFragment"
         android:label="fragment_new_post"
         tools:layout="@layout/fragment_new_post" />
+    <fragment
+        android:id="@+id/signInFragment"
+        android:name="ru.netology.nmedia.activity.SignInFragment"
+        android:label="fragment_sign_in"
+        tools:layout="@layout/fragment_sign_in" />
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="ru.netology.nmedia.activity.SignUpFragment"
+        android:label="fragment_sign_up"
+        tools:layout="@layout/fragment_sign_up" />
 </navigation>

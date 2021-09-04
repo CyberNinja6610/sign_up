@@ -6,5 +6,11 @@
         android:icon="@drawable/ic_menu_save_24dp"
         android:title="@string/menu_save"
         app:showAsAction="always" />
+    <group android:id="@+id/authenticated">
+        <item
+            android:id="@+id/signout_with_confirm"
+            android:title="@string/sign_out"
+            app:showAsAction="never" />
+    </group>
 </menu>
 

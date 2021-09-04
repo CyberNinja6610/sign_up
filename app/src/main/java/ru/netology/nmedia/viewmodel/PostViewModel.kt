@@ -68,6 +68,8 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
     private val _photo = MutableLiveData(noPhoto)
     val photo: LiveData<PhotoModel>
         get() = _photo
+    val authenticated: Boolean
+        get() = AppAuth.getInstance().authStateFlow.value.id != 0L
 
     init {
         loadPosts()

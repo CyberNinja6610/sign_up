@@ -9,7 +9,9 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import ru.netology.nmedia.R
 import ru.netology.nmedia.adapter.OnInteractionListener
 import ru.netology.nmedia.adapter.PostsAdapter
@@ -17,6 +19,7 @@ import ru.netology.nmedia.databinding.FragmentFeedBinding
 import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.viewmodel.PostViewModel
 
+@ExperimentalCoroutinesApi
 class FeedFragment : Fragment() {
     private val viewModel: PostViewModel by viewModels(ownerProducer = ::requireParentFragment)
 
@@ -33,7 +36,11 @@ class FeedFragment : Fragment() {
             }
 
             override fun onLike(post: Post) {
-                viewModel.likeById(post.id)
+                if (viewModel.authenticated) {
+                    viewModel.likeById(post.id)
+                    return
+                }
+                showSignInRequiredDialog()
             }
 
             override fun onRemove(post: Post) {
@@ -76,9 +83,26 @@ class FeedFragment : Fragment() {
         }
 
         binding.fab.setOnClickListener {
-            findNavController().navigate(R.id.action_feedFragment_to_newPostFragment)
+            if (viewModel.authenticated) {
+                findNavController().navigate(R.id.action_feedFragment_to_newPostFragment)
+                return@setOnClickListener
+            }
+            showSignInRequiredDialog()
         }
 
         return binding.root
+    }
+
+    fun showSignInRequiredDialog() {
+        MaterialAlertDialogBuilder(requireActivity())
+            .setTitle(getString(R.string.sign_in))
+            .setMessage(getString(R.string.sign_in_required))
+            .setNegativeButton(getString(R.string.action_cancel)) { dialog, which ->
+                dialog.cancel()
+            }
+            .setPositiveButton(getString(R.string.sign_in)) { dialog, which ->
+                findNavController().navigate(R.id.action_to_sign_in)
+            }
+            .show()
     }
 }

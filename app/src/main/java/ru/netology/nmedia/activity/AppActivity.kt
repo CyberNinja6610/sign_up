@@ -63,12 +63,20 @@ class AppActivity : AppCompatActivity(R.layout.activity_app) {
         return when (item.itemId) {
             R.id.signin -> {
                 // TODO: just hardcode it, implementation must be in homework
-                AppAuth.getInstance().setAuth(5, "x-token")
+                /*AppAuth.getInstance().setAuth(5, "x-token")*/
+                findNavController(R.id.nav_host_fragment)
+                    .navigate(
+                        R.id.action_to_sign_in,
+                    )
                 true
             }
             R.id.signup -> {
                 // TODO: just hardcode it, implementation must be in homework
-                AppAuth.getInstance().setAuth(5, "x-token")
+                /*AppAuth.getInstance().setAuth(5, "x-token")*/
+                findNavController(R.id.nav_host_fragment)
+                    .navigate(
+                        R.id.action_to_sign_up,
+                    )
                 true
             }
             R.id.signout -> {

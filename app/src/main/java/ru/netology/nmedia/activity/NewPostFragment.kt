@@ -9,13 +9,17 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.github.dhaval2404.imagepicker.constant.ImageProvider
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import ru.netology.nmedia.R
+import ru.netology.nmedia.auth.AppAuth
 import ru.netology.nmedia.databinding.FragmentNewPostBinding
 import ru.netology.nmedia.util.AndroidUtils
 import ru.netology.nmedia.util.StringArg
 import ru.netology.nmedia.viewmodel.PostViewModel
 
+@ExperimentalCoroutinesApi
 class NewPostFragment : Fragment() {
 
     companion object {
@@ -34,9 +38,12 @@ class NewPostFragment : Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        menu.removeItem(R.id.signout)
         inflater.inflate(R.menu.menu_new_post, menu)
     }
 
+    @Override
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.save -> {
@@ -45,6 +52,21 @@ class NewPostFragment : Fragment() {
                     viewModel.save()
                     AndroidUtils.hideKeyboard(requireView())
                 }
+                true
+            }
+            R.id.signout_with_confirm -> {
+                MaterialAlertDialogBuilder(requireActivity())
+                    .setTitle(getString(R.string.sign_out))
+                    .setMessage(getString(R.string.are_you_sure))
+                    .setNegativeButton(getString(R.string.no)) { dialog, which ->
+                        dialog.cancel()
+                    }
+                    .setPositiveButton(getString(R.string.yes)) { dialog, which ->
+                        AppAuth.getInstance().removeAuth()
+                        findNavController().navigateUp()
+                    }
+                    .show()
+
                 true
             }
             else -> super.onOptionsItemSelected(item)
